@@ -1,0 +1,333 @@
+Employee Manangement System
+import java.util.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+class Employee40{
+  static String companyName="bitlabs";
+  private static int nextId=1;
+  private int id;
+  private String employeeName;
+  private int age;
+  private String gender;
+  private String city;
+  private String address;
+  private long mobileNumber;
+  private double salary;
+  private Date dateOfJoining;
+  public Employee40(String employeeName,int age,String gender,String city,String address,long mobileNumber,double salary,Date dateOfJoining){ 
+    this.id=nextId++;
+    this.employeeName=employeeName;
+    this.age=age;
+    this.gender=gender;
+    this.city=city;
+    this.address=address;
+    this.mobileNumber=mobileNumber;
+    this.salary=salary;
+    this.dateOfJoining=dateOfJoining;
+  }
+  public int getId(){
+    return id;
+  }
+  public String getEmployeeName(){
+    return employeeName;
+  }
+  public int getAge(){
+    return age;
+  }
+  public String getGender(){
+    return gender;
+  }
+  public String getCity(){
+    return city;
+  }
+  public String getAddress(){
+    return address;
+  }
+  public long getMobileNumber(){
+    return mobileNumber;
+  }
+  public double getSalary(){
+    return salary;
+  }
+  public Date getDateOfJoining(){
+    return dateOfJoining;
+  }
+}
+class InvalidIdException2 extends Exception{
+  InvalidIdException2(String msg){
+    super(msg);
+  }
+}
+class Companies{
+  HashMap<Integer,Employee40> hs=new HashMap<Integer,Employee40>();
+  public void addEmployeeDetails(Employee40 emp){
+    hs.put(emp.getId(),emp);
+  }
+  public Employee40 getEmployeeDetailsById(int id){
+    return hs.get(id);
+  }
+  public void displayEmployeeDetails(){
+    boolean check=hs.isEmpty();
+    if(check==false){
+      for(Employee40 emp:hs.values()){
+        System.out.println("employee details are");
+        System.out.println("Employee Id:"+emp.getId());
+        System.out.println("employee Name:"+emp.getEmployeeName());
+        System.out.println("employee age:"+emp.getAge());
+        System.out.println("employee gender"+emp.getGender());
+        System.out.println("employee City "+emp.getCity());
+        System.out.println("employee Address"+emp.getAddress());
+        System.out.println("Employee mobile number"+emp.getMobileNumber());
+        System.out.println("employye Salary :"+emp.getSalary());
+        System.out.println("employee Date of joining"+emp.getDateOfJoining());
+        System.out.println("Employee company name: "+emp.companyName);
+      }
+    }
+    else{
+      System.out.println("collection is empty");
+    }
+        
+  }
+  public ArrayList<Employee40> getEmployeeByName(String name){
+    ArrayList<Employee40> al=new ArrayList<>();
+    for(Employee40 emp1:hs.values()){
+      if(emp1.getEmployeeName().equalsIgnoreCase(name)){
+        al.add(emp1);    
+      }
+    }
+    return al;
+    
+  }
+  public ArrayList<Employee40> getEmployeeByAgeGroup(int maxAge,int minAge){
+    ArrayList<Employee40> al1=new ArrayList<>();
+    for(Employee40 emp2:hs.values()){
+      if(emp2.getAge()>minAge && emp2.getAge()<maxAge){
+        al1.add(emp2);
+      }
+    }
+    return al1;
+  }
+  public ArrayList<Employee40> getEmployeeByCity(String city){
+    ArrayList<Employee40> al2=new ArrayList<>();
+    for(Employee40 emp3:hs.values()){
+      if(emp3.getCity().equalsIgnoreCase(city)){
+        al2.add(emp3);    
+      }
+    }
+    return al2;
+  }
+  public ArrayList<Employee40> getEmployeeBySalaryRange(int maxSalary,int minSalary){
+    ArrayList<Employee40> al3=new ArrayList<>();
+    
+    for(Employee40 emp4:hs.values()){
+      if(emp4.getSalary()>minSalary && emp4.getSalary()<maxSalary){
+        al3.add(emp4);
+      }
+    }
+    return al3;
+  }
+  public void deleteEmployeeDetailsById(int id){
+    boolean check =hs.isEmpty();
+    //Exception handling
+    try{
+    if(check!=false){
+      throw new InvalidIdException2("id is not valid");
+    }
+    else{
+      hs.remove(id);
+      System.out.println(id+"emppoyee details  will be deleted");
+    }
+    }
+    catch(InvalidIdException2 e){
+      System.out.println(e.getMessage());
+    }
+    System.out.println("no details found for that id");
+  }
+    
+  
+}
+class InvalidMobileNumber extends Exception{
+  InvalidMobileNumber(String msg){
+    super(msg);
+  }
+}
+public class EmployeeProjectProgram{
+  public static void main(String[] args) throws Exception{
+    Scanner sc=new Scanner(System.in);
+    Companies cmp=new Companies();
+    while(true){
+      System.out.println("*****Welcome to employee management System*******");
+      System.out.println("1.add Employee Details\n2.add Employee details by id\n3.Display all Employee details\n4.get Employee details by name\n5.get employee details by age group\n6.get employee details by city\n7.get employee deatils by salary range\n8.delete employee details by id\n9.exit ");
+      System.out.println("enter the choice");
+      int choice =sc.nextInt();
+      switch(choice){
+        case 1:
+          System.out.println("enter the  employee name");
+          String name=sc.nextLine();
+           sc.nextLine();
+          System.out.println("enter the age");
+          
+          int age=sc.nextInt();
+          System.out.println("enter the gender");
+          String gender=sc.nextLine();
+          sc.nextLine();
+          System.out.println("enter the city");
+          String city=sc.nextLine();
+          System.out.println("entre the address");
+          String address=sc.nextLine();
+          System.out.println("enter the mobile number");
+          long mobileNumber=sc.nextLong();
+          if(1000000000l<=mobileNumber && 9999999999l>=mobileNumber){
+            mobileNumber=mobileNumber;
+          }
+          else{
+            try{
+              throw new InvalidMobileNumber("InvalidMobileNumber");
+            }
+            catch(InvalidMobileNumber e){
+              System.out.print("Exception: "+e.getMessage());
+            }
+          }
+          System.out.println("entre the salary");
+          double salary =sc.nextDouble();
+          System.out.println("enter the date of joining");
+          String dateOfJoining=sc.nextLine();
+          sc.nextLine();
+          DateFormat date=new SimpleDateFormat("DD-MM-YYYY");
+          Date presentDate=date.parse(dateOfJoining);
+          Employee40 emp=new Employee40(name,age,gender,city,address,mobileNumber,salary,presentDate);
+          cmp.addEmployeeDetails(emp);
+          break;
+        case 2:
+          System.out.println("enter the id to get employee details");
+          int id=sc.nextInt();
+          Employee40 emp1=cmp.getEmployeeDetailsById(id);
+          if(emp1!=null){
+              System.out.println("employee details are");
+              System.out.println("Employee Id:"+emp1.getId());
+              System.out.println("employee Name:"+emp1.getEmployeeName());
+              System.out.println("employee age:"+emp1.getAge());
+              System.out.println("employee gender"+emp1.getGender());
+              System.out.println("employee City "+emp1.getCity());
+              System.out.println("employee Address"+emp1.getAddress());
+              System.out.println("Employee mobile number"+emp1.getMobileNumber());
+              System.out.println("employye Salary :"+emp1.getSalary());
+              System.out.println("employee Date of joining"+emp1.getDateOfJoining());
+            System.out.println("Employee company name: "+emp1.companyName);
+          }
+          else{
+            System.out.println("collection is empty");
+           }
+          
+          break;
+        case 3:
+          cmp.displayEmployeeDetails();
+          break;
+        case 4:
+          System.out.println("enter the name to display details by name");
+          String name1=sc.nextLine();
+          ArrayList<Employee40> al2=cmp.getEmployeeByName(name1);
+          if(al2!=null){
+            for(Employee40 emp2:al2){
+              System.out.println("employee details  based on name are");
+              System.out.println("Employee Id:"+emp2.getId());
+              System.out.println("employee Name:"+emp2.getEmployeeName());
+              System.out.println("employee age:"+emp2.getAge());
+              System.out.println("employee gender"+emp2.getGender());
+              System.out.println("employee City "+emp2.getCity());
+              System.out.println("employee Address"+emp2.getAddress());
+              System.out.println("Employee mobile number"+emp2.getMobileNumber());
+              System.out.println("employye Salary :"+emp2.getSalary());
+              System.out.println("employee Date of joining"+emp2.getDateOfJoining());
+              System.out.println("Employee company name: "+emp2.companyName);
+            }
+          }
+          else{
+            System.out.println("no details found for that name");
+          }
+          break;
+        case 5:
+          System.out.println("enter the min and max age");
+          int maxAge=sc.nextInt();
+          int minAge=sc.nextInt();
+          ArrayList<Employee40> al3=cmp.getEmployeeByAgeGroup(maxAge,minAge);
+          if(al3!=null){
+            for(Employee40 emp3:al3){
+             System.out.println("employee details  based on name are");
+              System.out.println("Employee Id:"+emp3.getId());
+              System.out.println("employee Name:"+emp3.getEmployeeName());
+              System.out.println("employee age:"+emp3.getAge());
+              System.out.println("employee gender"+emp3.getGender());
+              System.out.println("employee City "+emp3.getCity());
+              System.out.println("employee Address"+emp3.getAddress());
+              System.out.println("Employee mobile number"+emp3.getMobileNumber());
+              System.out.println("employye Salary :"+emp3.getSalary());
+              System.out.println("employee Date of joining"+emp3.getDateOfJoining());
+              System.out.println("Employee company name: "+emp3.companyName);
+            }
+          }
+          else{
+            System.out.println("no details found for that name");
+          } 
+            break;
+        case 6:
+          System.out.println("ebter the city");
+          String city1=sc.nextLine();
+          ArrayList<Employee40> al4=cmp.getEmployeeByCity(city1);
+          if(al4!=null){
+            for(Employee40 emp4:al4){
+              System.out.println("employee details  based on name are");
+              System.out.println("Employee Id:"+emp4.getId());
+              System.out.println("employee Name:"+emp4.getEmployeeName());
+              System.out.println("employee age:"+emp4.getAge());
+              System.out.println("employee gender"+emp4.getGender());
+              System.out.println("employee City "+emp4.getCity());
+              System.out.println("employee Address"+emp4.getAddress());
+              System.out.println("Employee mobile number"+emp4.getMobileNumber());
+              System.out.println("employye Salary :"+emp4.getSalary());
+              System.out.println("employee Date of joining"+emp4.getDateOfJoining());
+              System.out.println("Employee company name: "+emp4.companyName);
+            }
+          }
+          else{
+            System.out.println("no details found for that city");
+          }
+            break;
+        case 7:
+          System.out.println("enter tye min and max salary");
+          
+          int maxSalary=sc.nextInt();
+          int minSalary=sc.nextInt();
+          ArrayList<Employee40> al5=cmp.getEmployeeBySalaryRange(maxSalary,minSalary);
+          if(al5!=null){
+            for(Employee40 emp5:al5){
+              System.out.println("employee details  based on name are");
+              System.out.println("Employee Id:"+emp5.getId());
+              System.out.println("employee Name:"+emp5.getEmployeeName());
+              System.out.println("employee age:"+emp5.getAge());
+              System.out.println("employee gender"+emp5.getGender());
+              System.out.println("employee City "+emp5.getCity());
+              System.out.println("employee Address"+emp5.getAddress());
+              System.out.println("Employee mobile number"+emp5.getMobileNumber());
+              System.out.println("employye Salary :"+emp5.getSalary());
+              System.out.println("employee Date of joining"+emp5.getDateOfJoining());
+              System.out.println("Employee company name: "+emp5.companyName);
+            }
+          }
+          else{
+            System.out.println("no details found for that salary range");
+          }
+          break;
+        case 8:
+          System.out.println("enter the id");
+          int id2=sc.nextInt();
+          cmp.deleteEmployeeDetailsById(id2);
+          break;
+        case 9:
+          System.out.println("exit");
+          System.exit(0);
+            
+      }
+    }
+  }
+}
